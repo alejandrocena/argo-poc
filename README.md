@@ -1,2 +1,2 @@
 # argo-poc
-POC of using ARGO Workflows
+POC of using Argo Workflows

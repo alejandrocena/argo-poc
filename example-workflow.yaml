@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: global-parameters-
+spec:
+  entrypoint: service_pay
+
+  templates:
+
+  - name: service_pay
+    container:
+      image: docker:17.10
+      command: [sh, -c]
+      args: ["until docker ps; do sleep 3; done; docker run --rm debian:latest cat /etc/os-release"]
+      env:
+      - name: DOCKER_HOST
+        value: 127.0.0.1
+  
+  - name: service_pay_reverse
+    container:
+      image: docker:17.10
+      command: [runB]
+
+  - name: wallet_extraction
+    container:
+      image: docker:17.10
+      command: [runA]
+  
+  - name: wallet_extraction_reverse
+    container:
+      image: lambci/lambda:nodejs8.10
+      command: [runB]
